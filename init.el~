@@ -1,0 +1,48 @@
+;; -*- Mode: Emacs-Lisp ; Coding : utf-8 -*-
+
+(require 'cl)
+
+;---
+; PATH読み込み
+;----
+
+
+
+;----
+; Package管理
+;----
+;;leaf
+
+;----
+; 分割した設定ファイルを読み込む
+;----
+(require 'init-loader)
+(init-loader-load "~/.emacs.d/conf")
+
+;; conf/  ----------------------
+;;ファイリング
+(load "filing")
+
+;;フレーム
+(load "frame")
+
+;;フォント & coding
+(load "font")
+
+;;キーバインド
+(load "keybind")
+
+;;言語ごとの設定
+;(load "init-python")
+;; -----------------------------
+
+
+;----
+; 3rd_PARTY
+;----
+
+;;clock
+(require 'sky-color-clock)
+(sky-color-clock-initialize 33) ; FUK, Japan
+(setq sky-color-clock-format "%H:%M")
+(push '(:eval (sky-color-clock)) (default-value 'mode-line-format))
