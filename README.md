@@ -4,7 +4,7 @@
 [私の場所](https://github.com/ich747/emacs.git)
 
 
-[x] 計画表
-[x] ベースinit.el
+- [x] 計画表
+-[x] ベースinit.el
 [ ] package管理
   - [ ]leaf
