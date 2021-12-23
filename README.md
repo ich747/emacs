@@ -1,7 +1,6 @@
 # emacs
 
-私の目的はemacsをich好みの設定にすること。\n
-My purpose is to set emacs for ich
+私の目的はemacsをich好みの設定にすること。<br> My purpose is to set emacs for ich
 
 I'm [here](https://github.com/ich747/emacs.git)
 
