@@ -1,8 +1,5 @@
 ;; -*- Mode: Emacs-Lisp ; Coding : utf-8 -*-
 
-(require 'cl)
-
-
 ;;# PATH読み込み
 
 ;;サブディレクトリ含む再起的path読み込み
@@ -15,45 +12,43 @@
 	    (normal-top-level-add-subdirs-to-load-path))))))
 (add-to-load-path "my_elisp" "thirdparty")
 
-
-
-
-
 ;; #Package管理
 
+;;First contact
+(eval-and-compile
+  (when (or load-file-name byte-compile-current-file)
+    (setq user-emacs-directory
+          (expand-file-name
+           (file-name-directory (or load-file-name byte-compile-current-file))))))
+
+(eval-and-compile
+  (customize-set-variable
+   'package-archives '(("gnu"   . "https://elpa.gnu.org/packages/")
+                       ("melpa" . "https://melpa.org/packages/")
+                       ("org"   . "https://orgmode.org/elpa/")))
+  (package-initialize)
+
+  (unless (package-installed-p 'leaf)
+    (package-refresh-contents)
+    (package-install 'leaf))
 
 
 
 
-;; #分割した設定ファイルを読み込む
 
 ;(require 'init-loader)
 ;(init-loader-load "~/.emacs.d/conf")
-;
-;;; conf/  ----------------------
-;;;ファイリング
 ;(load "filing")
-;
-;;;フレーム
 ;(load "frame")
-;
-;;;フォント & coding
 ;(load "font")
-;
-;;;キーバインド
 ;(load "keybind")
-;
-;;;言語ごとの設定
-;(load "init-python")
-;; -----------------------------
-
 
 ;----
 ; 3rd_PARTY
 ;----
 
 ;;clock
-(require 'sky-color-clock)
-(sky-color-clock-initialize 33) ; FUK, Japan
-(setq sky-color-clock-format "%H:%M")
-(push '(:eval (sky-color-clock)) (default-value 'mode-line-format))
+;(require 'sky-color-clock)
+;(sky-color-clock-initialize 33) ; FUK, Japan
+;(setq sky-color-clock-format "%H:%M")
+;(push '(:eval (sky-color-clock)) (default-value 'mode-line-format))
