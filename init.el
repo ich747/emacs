@@ -1,47 +1,71 @@
 ;; -*- Mode: Emacs-Lisp ; Coding : utf-8 -*-
 
-;;# PATH読み込み
 
-;;サブディレクトリ含む再起的path読み込み
-(defun add-to-load-path (&rest paths)
-  (let (path)
-    (dolist (path paths paths)
-      (let ((default-directory (expand-file-name (concat user-emacs-directory path))))
-        (add-to-list 'load-path default-directory)
-        (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
-	    (normal-top-level-add-subdirs-to-load-path))))))
-(add-to-load-path "my_elisp" "thirdparty")
+;;<先史>-----------------------------------------------*
 
-;; #Package管理
+;; <ディレクトリ構成>
 
-;;First contact
-(eval-and-compile
-  (when (or load-file-name byte-compile-current-file)
-    (setq user-emacs-directory
-          (expand-file-name
-           (file-name-directory (or load-file-name byte-compile-current-file))))))
+;; <\ディレクトリ構成>
 
+;; <leaf install code>
 (eval-and-compile
   (customize-set-variable
    'package-archives '(("gnu"   . "https://elpa.gnu.org/packages/")
                        ("melpa" . "https://melpa.org/packages/")
                        ("org"   . "https://orgmode.org/elpa/")))
   (package-initialize)
-
+  
   (unless (package-installed-p 'leaf)
     (package-refresh-contents)
     (package-install 'leaf))
 
+  (leaf leaf-keywords
+    :ensure t
+    :init
+    (leaf el-get :ensure t);:use github
+    :config
+    ;; initialize leaf-keywords.el
+    (leaf-keywords-init)))
+
+;; <\leaf install code>
+
+;;<\先史>----------------------------------------------*
+
+
+
+;;<Pkg via leaf>---------------------------------------*
+
+(leaf *use-pkg_2_leaf
+  :doc "You can try to transform On *scratch*"
+  :config
+  (leaf use-package
+    :ensure t
+    :require t)
+  (leaf leaf-convert
+    :ensure t))
+
+
+(leaf *paren
+  :doc "highlight matching paren"
+  :tag "builtin"
+  :custom ((show-paren-delay . 0.1))
+  :global-minor-mode show-paren-mode)
+
+
+(leaf *key-binds
+  :doc "define my key-binds"
+  :tag "builtin" "internal"
+  :config
+  (defalias 'yes-or-no-p 'y-or-n-p))
+
+;;</Pkg via leaf>---------------------------------------*
 
 
 
 
-;(require 'init-loader)
-;(init-loader-load "~/.emacs.d/conf")
-;(load "filing")
-;(load "frame")
-;(load "font")
-;(load "keybind")
+;;exportするための宣言
+(provide 'init)
+
 
 ;----
 ; 3rd_PARTY
