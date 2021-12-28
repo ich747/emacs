@@ -24,6 +24,7 @@
     ;; initialize leaf-keywords.el
     (leaf-keywords-init)
     ))
+
 ;; <\leaf install code>
 ;;<\先史>----------------------------------------------*
 
@@ -35,10 +36,11 @@
   (user-full-name . "Hay Ich")
   (user-mail-address . "ich.hub.747@gmail.com")
   (user-login-name . "ich"))
-
-
-
-
+(leaf cus-edit
+  :doc "tools for customizing Emacs and Lisp packages"
+  :tag "builtin" "faces" "help"
+  :url "https://qiita.com/conao3/items/347d7e472afd0c58fbd7"
+  :custom `((custom-file . ,(locate-user-emacs-file "custom.el"))))
 (leaf *LEAF-CONVERT
   :doc "You can try to transform On *scratch*"
   :config
@@ -47,15 +49,17 @@
     :ensure t
     :require t)
   (leaf leaf-convert
-    :ensure t))
-
-
-
+    :ensure t)
+  (leaf leaf-tree
+    :ensure t
+    :custom ((imenu-list-size   . 30)
+	     (imenu-list-position . 'left))))
 
 
 (leaf FRAME
   :doc "フレームに関する設定"
   :config
+  (leaf :custom (debug-on-error . t))
   (leaf start-up
     :doc "スタートアップの表示をしない"
     :custom
@@ -85,10 +89,6 @@
   (leaf y-or-n
     :doc "y or n"
     :config (defalias 'yes-or-no-p 'y-or-n-p)))
-
-
-
-
 (leaf WRITINGS
   :doc "書く設定"
   :config
@@ -122,7 +122,6 @@
       (show-paren-mode    . t)
       (electric-pair-mode . t)
       )))
-
 (leaf FILE_SYSTEM
   :doc "ファイルの読み書き保存に関する設定"
   :config
@@ -146,7 +145,6 @@
 	(kept-old-versions              . 1)
 	(delete-old-versions            . t)
 	(auto-save-list-file-prefix     . ,(locate-user-emacs-file "backup/.saves-")))))
-
   (leaf revert-buffer
     :disabled t;期待通り機能せず
     :tag "builtin" "myconfig"
@@ -159,8 +157,6 @@
 	  (revert-buffer :ignore-auto :noconfirm)
 	(error "The buffer has been modified")))
     :bind ("M-r" . my:revert-buffer)))
-
-
 (leaf KEYBIND
   :tag "builtin"
   :doc "便利キーバインド"
@@ -169,8 +165,7 @@
   ("C-t"    . 'other-window)
   ("C-x k"  . 'kill-this-buffer)
   ("M-<up>" . 'switch-to-buffer)
-  ("C-z"    . 'hs-minor-mode)
-
+  ("M-t"    . 'leaf-tree-mode)
   :custom
   (kill-whole-line . t)
   :config
@@ -185,8 +180,7 @@
 	  (while (re-search-forward "^-\\|^[0-9]+)" end t);;-から始まる行の検索
 	    (replace-match (format "%d) " no))
 	    (setq no (+ no 1)))))))
-    :bind
-    ("C-="    . my:enumerate-region))
+    :bind ("C-="    . my:enumerate-region))
 
 
 (leaf flycheck
@@ -199,7 +193,6 @@
   :bind (("M-n" . flycheck-next-error)
          ("M-p" . flycheck-previous-error))
   :global-minor-mode global-flycheck-mode)
-
 
 (leaf ZONE
   :tag "builtin"
@@ -219,10 +212,6 @@
   :custom (zone-when-idle . 10))
 
 
-
-
-
-
 (leaf *delete-file-if-no-contents
   :tag "拾い物"
   :url "https://uwabami.github.io/cc-env/Emacs.html"
@@ -233,12 +222,6 @@
 	       (= (point-min) (point-max)))
 	(delete-file (buffer-file-name (current-buffer)))))
   :hook (after-save-hook . my:delf-no-contents))
-
-
-
-
-
-
 (leaf *trailing-white-space
   :tag "拾い物"
   :url "https://uwabami.github.io/cc-env/Emacs.html"
@@ -256,48 +239,26 @@
   :hook (before-save-hook . my:delete-trailing-whitespace))
 
 
-
-
-
-
-
-
-
-
-
 (leaf THIRD_PARTY
   :tag "3rd_party"
   :config
   (leaf sky-color-clock
-    :tag "3rd_party" "web_api"
-    :url "https://github.com/zk-phi/sky-color-clock"
-    :req "sky api"
-    :doc "空の色を表示"
     :el-get "zk-phi/sky-color-clock"
-    :preface
-    (defun my:sky-color-clock-form ()
-      "左よせにする"
-      (let* ((sky-color-clock-str
-              (propertize (sky-color-clock) 'help-echo (format-time-string "Sky color clock\n%F (%a)")))
-             (mode-line-right-margin
-              (propertize " " 'display `(space :align-to (- right-fringe ,(length sky-color-clock-str))))))
-	(concat mode-line-right-margin sky-color-clock-str)))
+    :require t
     :custom
-    (sky-color-clock-initialize . 33)
     (sky-color-clock-format     . "%H:%M")
-    :custom
-    (mode-line-end-spaces . '(:eval (my:sky-color-clock-form)))
-    ;:config (push '(:eval (sky-color-clock)) (default-value 'mode-line-format))
-    ))
-
-
-
-
-
-
-
+    ;(mode-line-end-spaces      . '(:eval (my:sky-color-clock-form)))
+    :config
+    (sky-color-clock-initialize 33);FUK
+    (push '(:eval (sky-color-clock)) (default-value 'mode-line-format))))
 
 ;;</Pkg via leaf>---------------------------------------*
 
 ;;exportするための宣言
+
+;(require 'sky-color-clock)
+;(sky-color-clock-initialize 33)
+;(setq sky-color-clock-format "%H:%M")
+;(push '(:eval (sky-color-clock)) (default-value 'mode-line-format))
+
 (provide 'init)
