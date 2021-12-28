@@ -161,7 +161,15 @@
 	(kept-new-versions              . 3)
 	(kept-old-versions              . 1)
 	(delete-old-versions            . t)
-	(auto-save-list-file-prefix     . ,(locate-user-emacs-file "backup/.saves-")))))
+	(auto-save-list-file-prefix     . ,(locate-user-emacs-file "backup/.saves-"))))
+    (leaf time-stamp
+      :hook (before-save-hook . time-stamp)
+      :custom
+      ((time-stamp-active     . t)
+       (time-stamp-line-limit . 10)
+       (time-stamp-start      . "$Lastupdate: 2")
+       (time-stamp-end        . "\\$")
+       (time-stamp-format     . "%Y-%02m-%02d %02H:%02M:%02S")))
   (leaf revert-buffer
     :disabled t;期待通り機能せず
     :tag "builtin" "myconfig"
@@ -173,7 +181,13 @@
       (if (or force-reverting (not (buffer-modified-p)))
 	  (revert-buffer :ignore-auto :noconfirm)
 	(error "The buffer has been modified")))
-    :bind ("M-r" . my:revert-buffer)))
+    :bind ("M-r" . my:revert-buffer))
+  (leaf autorevert
+    :custom
+    ((auto-revert-interval . 0.1))
+    :hook
+    (emacs-startup-hook . global-auto-revert-mode))
+  )
 (leaf KEYBIND
   :tag "builtin"
   :doc "便利キーバインド"

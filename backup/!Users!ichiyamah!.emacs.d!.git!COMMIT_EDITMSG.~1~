@@ -1,0 +1,24 @@
+
+; Please enter the commit message for your changes. Lines starting
+; with ';' will be ignored, and an empty message aborts the commit.
+;
+; On branch main
+; Your branch is up to date with 'origin/main'.
+;
+; Changes to be committed:
+;	deleted:    auto-save-list/.saves-77582-ich.local~
+;	modified:   elpa/archives/gnu/archive-contents
+;	modified:   init.el
+;	modified:   init.elc
+;
+; Untracked files:
+;	backup/
+;	el-get/
+;	elpa/auto-complete-20211210.1808/
+;	elpa/dash-20210826.1149/
+;	elpa/epl-20180205.2049/
+;	elpa/flycheck-20210825.1804/
+;	elpa/pkg-info-20150517.1143/
+;	elpa/popup-20210625.400/
+;	transient/
+;

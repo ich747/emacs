@@ -5,9 +5,9 @@
 ;; Author: Naoya Yamashita <conao3@gmail.com>
 ;; Maintainer: Naoya Yamashita <conao3@gmail.com>
 ;; Keywords: lisp settings
-;; Package-Version: 20211115.1551
-;; Package-Commit: 0a698d240e49ebfbe57f7637ba104498478052ee
-;; Version: 4.5.4
+;; Package-Version: 20211226.1633
+;; Package-Commit: 9eb18e8c9c375aa0158fbd06ea906bfbf54408fe
+;; Version: 4.5.5
 ;; URL: https://github.com/conao3/leaf.el
 ;; Package-Requires: ((emacs "24.1"))
 
@@ -325,8 +325,24 @@ Sort by `leaf-sort-leaf--values-plist' in this order.")
   "Normalize rule.")
 
 (defvar leaf-verify
-  '(((memq leaf--key (list :package))
+  '(((memq leaf--key '(:package))
      (if (not (equal '(nil) (car leaf--value))) leaf--value nil))
+    ((memq leaf--key '(:after))
+     (delq nil
+           (mapcar
+            (lambda (elm)
+              (cond
+               ((eq elm nil)
+                (prog1 nil
+                  (leaf-error "Error occurs in leaf block: %s" leaf--name)
+                  (leaf-error "Attempt wait constant: nil;  Please check your specification")))
+               ((keywordp elm)
+                (prog1 nil
+                  (leaf-error "Error occurs in leaf block: %s" leaf--name)
+                  (leaf-error "Attempt wait constant keyword: %s;  Please check your specification" elm)))
+               (t
+                elm)))
+            leaf--value)))
     ((memq leaf--key (list
                       :hook :defun
                       :pl-setq :pl-pre-setq :pl-setq-default :pl-custom
@@ -818,7 +834,8 @@ If NO-DUP is non-nil, do not `push' if the element already exists."
 
 (define-minor-mode leaf-key-override-global-mode
   "A minor mode so that keymap settings override other modes."
-  t "")
+  :init-value t
+  :lighter "")
 
 ;; the keymaps in `emulation-mode-map-alists' take precedence over
 ;; `minor-mode-map-alist'
@@ -860,7 +877,8 @@ For example:
     `(let* ((old (lookup-key ,mmap ,(if vecp key* `(kbd ,key*))))
             (value ,(list '\` `(,mmap ,mstr ,bindto ,',(and old (not (numberp old)) old) ,path))))
        (leaf-safe-push value leaf-key-bindlist)
-       (define-key ,mmap ,(if vecp key* `(kbd ,key*)) ',command*))))
+       (define-key ,mmap ,(if vecp key* `(kbd ,key*))
+                   ,(if (eq bindto '*lambda-function*) command* `',command*)))))
 
 (defmacro leaf-key* (key command)
   "Similar to `leaf-key', but overrides any mode-specific bindings.

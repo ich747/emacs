@@ -1,0 +1,29 @@
+
+; Please enter the commit message for your changes. Lines starting
+; with ';' will be ignored, and an empty message aborts the commit.
+;
+; On branch main
+; Your branch is up to date with 'origin/main'.
+;
+; Changes to be committed:
+;	modified:   elpa/archives/gnu/archive-contents
+;	modified:   elpa/archives/melpa/archive-contents
+;	deleted:    elpa/leaf-20211115.1551/leaf-autoloads.el
+;	deleted:    elpa/leaf-20211115.1551/leaf-pkg.el
+;	deleted:    elpa/leaf-20211115.1551/leaf.el
+;	deleted:    elpa/leaf-20211115.1551/leaf.elc
+;	modified:   init.el
+;	modified:   init.elc
+;	deleted:    init.el~
+;
+; Untracked files:
+;	backup/
+;	el-get/
+;	elpa/dash-20210826.1149/
+;	elpa/epl-20180205.2049/
+;	elpa/flycheck-20210825.1804/
+;	elpa/imenu-list-20210420.1200/
+;	elpa/leaf-20211226.1633/
+;	elpa/leaf-tree-20211105.19/
+;	elpa/pkg-info-20150517.1143/
+;
