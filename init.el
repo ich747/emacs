@@ -72,7 +72,6 @@
     :custom ((imenu-list-size   . 30)
 	     (imenu-list-position . 'left))))
 
-
 (leaf FRAME
   :doc "フレームに関する設定"
   :config
@@ -161,9 +160,16 @@
 	(kept-new-versions              . 3)
 	(kept-old-versions              . 1)
 	(delete-old-versions            . t)
-	(auto-save-list-file-prefix     . ,(locate-user-emacs-file "backup/.saves-")))))
+	(auto-save-list-file-prefix     . ,(locate-user-emacs-file "backup/.saves-"))))
+    (leaf time-stamp
+      :hook (before-save-hook . time-stamp)
+      :custom
+      ((time-stamp-active     . t)
+       (time-stamp-line-limit . 10)
+       (time-stamp-start      . "$Lastupdate: 2")
+       (time-stamp-end        . "\\$")
+       (time-stamp-format     . "%Y-%02m-%02d %02H:%02M:%02S")))
   (leaf revert-buffer
-    :disabled t;期待通り機能せず
     :tag "builtin" "myconfig"
     :doc "現在のバッファの再読み込み"
     :preface
@@ -173,7 +179,14 @@
       (if (or force-reverting (not (buffer-modified-p)))
 	  (revert-buffer :ignore-auto :noconfirm)
 	(error "The buffer has been modified")))
-    :bind ("M-r" . my:revert-buffer)))
+    :bind ("M-r" . my:revert-buffer))
+  (leaf autorevert
+    :custom
+    ((auto-revert-interval . 0.1))
+    :hook
+    (emacs-startup-hook . global-auto-revert-mode)))
+  )
+
 (leaf KEYBIND
   :tag "builtin"
   :doc "便利キーバインド"
@@ -242,6 +255,7 @@
   :hook (after-save-hook . my:delf-no-contents))
 
 
+
 (leaf THIRD_PARTY
   :tag "3rd_party"
   :config
@@ -255,13 +269,11 @@
     (sky-color-clock-initialize 33);FUK
     (push '(:eval (sky-color-clock)) (default-value 'mode-line-format))))
 
+
+
+
+
 ;;</Pkg via leaf>---------------------------------------*
 
 ;;exportするための宣言
-
-;(require 'sky-color-clock)
-;(sky-color-clock-initialize 33)
-;(setq sky-color-clock-format "%H:%M")
-;(push '(:eval (sky-color-clock)) (default-value 'mode-line-format))
-
 (provide 'init)

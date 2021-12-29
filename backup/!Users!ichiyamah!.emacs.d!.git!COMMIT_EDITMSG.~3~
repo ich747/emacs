@@ -1,0 +1,59 @@
+
+; Please enter the commit message for your changes. Lines starting
+; with ';' will be ignored, and an empty message aborts the commit.
+;
+; On branch main
+; Your branch is up to date with 'origin/main'.
+;
+; Changes to be committed:
+;	new file:   backup/!Users!ichiyamah!.emacs.d!.git!COMMIT_EDITMSG.~1~
+;	new file:   backup/!Users!ichiyamah!.emacs.d!.git!COMMIT_EDITMSG.~2~
+;	new file:   backup/!Users!ichiyamah!.emacs.d!el-get!.loaddefs.el~
+;	new file:   backup/!Users!ichiyamah!.emacs.d!init.el.~1~
+;	new file:   backup/!Users!ichiyamah!.emacs.d!init.el.~2~
+;	new file:   backup/!Users!ichiyamah!.emacs.d.old!conf!keybind.el.~1~
+;	new file:   backup/#!Users!ichiyamah!.emacs.d!init.el#
+;	new file:   backup/.saves-44295-ich.local~
+;	new file:   el-get/.loaddefs.el
+;	new file:   el-get/.loaddefs.elc
+;	new file:   el-get/.status.el
+;	new file:   el-get/sky-color-clock
+;	modified:   elpa/archives/gnu/archive-contents
+;	modified:   elpa/archives/melpa/archive-contents
+;	new file:   elpa/dash-20210826.1149/dash-autoloads.el
+;	new file:   elpa/dash-20210826.1149/dash-pkg.el
+;	new file:   elpa/dash-20210826.1149/dash.el
+;	new file:   elpa/dash-20210826.1149/dash.elc
+;	new file:   elpa/dash-20210826.1149/dash.info
+;	new file:   elpa/dash-20210826.1149/dir
+;	new file:   elpa/epl-20180205.2049/epl-autoloads.el
+;	new file:   elpa/epl-20180205.2049/epl-pkg.el
+;	new file:   elpa/epl-20180205.2049/epl.el
+;	new file:   elpa/epl-20180205.2049/epl.elc
+;	new file:   elpa/flycheck-20210825.1804/flycheck-autoloads.el
+;	new file:   elpa/flycheck-20210825.1804/flycheck-buttercup.el
+;	new file:   elpa/flycheck-20210825.1804/flycheck-ert.el
+;	new file:   elpa/flycheck-20210825.1804/flycheck-ert.elc
+;	new file:   elpa/flycheck-20210825.1804/flycheck-pkg.el
+;	new file:   elpa/flycheck-20210825.1804/flycheck.el
+;	new file:   elpa/flycheck-20210825.1804/flycheck.elc
+;	new file:   elpa/imenu-list-20210420.1200/imenu-list-autoloads.el
+;	new file:   elpa/imenu-list-20210420.1200/imenu-list-pkg.el
+;	new file:   elpa/imenu-list-20210420.1200/imenu-list.el
+;	new file:   elpa/imenu-list-20210420.1200/imenu-list.elc
+;	renamed:    elpa/leaf-20211115.1551/leaf-autoloads.el -> elpa/leaf-20211226.1633/leaf-autoloads.el
+;	renamed:    elpa/leaf-20211115.1551/leaf-pkg.el -> elpa/leaf-20211226.1633/leaf-pkg.el
+;	renamed:    elpa/leaf-20211115.1551/leaf.el -> elpa/leaf-20211226.1633/leaf.el
+;	renamed:    elpa/leaf-20211115.1551/leaf.elc -> elpa/leaf-20211226.1633/leaf.elc
+;	new file:   elpa/leaf-tree-20211105.19/leaf-tree-autoloads.el
+;	new file:   elpa/leaf-tree-20211105.19/leaf-tree-pkg.el
+;	new file:   elpa/leaf-tree-20211105.19/leaf-tree.el
+;	new file:   elpa/leaf-tree-20211105.19/leaf-tree.elc
+;	new file:   elpa/pkg-info-20150517.1143/pkg-info-autoloads.el
+;	new file:   elpa/pkg-info-20150517.1143/pkg-info-pkg.el
+;	new file:   elpa/pkg-info-20150517.1143/pkg-info.el
+;	new file:   elpa/pkg-info-20150517.1143/pkg-info.elc
+;	modified:   init.el
+;	modified:   init.elc
+;	deleted:    init.el~
+;
