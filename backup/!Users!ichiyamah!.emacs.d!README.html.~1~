@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>README.html</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+
+</head>
+
+<body>
+
+<h1 id="emacs">emacs</h1>
+
+<p>私の目的はemacsをich好みの設定にすること。<br> My purpose is to set emacs for ich</p>
+
+<p>I&#8217;m <a href="https://github.com/ich747/emacs.git">here</a></p>
+
+<ul>
+<li>[x] 計画表</li>
+<li>[x] ベースinit.el</li>
+<li>[ ] package管理</li>
+<li> [ ]leaf</li>
+</ul>
+
+<p>a</p>
+
+<ul>
+<li>[ ] a</li>
+</ul>
+
+</body>
+</html>

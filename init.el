@@ -75,20 +75,32 @@
 (leaf FRAME
   :doc "フレームに関する設定"
   :config
-  (leaf :custom (debug-on-error . t))
+  
+  (leaf debug-on-error
+    :doc "デバッグ表示"
+    :custom (debug-on-error . t))
+  
   (leaf start-up
     :doc "スタートアップの表示をしない"
     :custom
     (inhibit-startup-message . t)
     (inhibit-startup-screen  . t))
+  
   (leaf title-bar
     :doc "タイトルバーにフルパス表示"
     :custom
     (frame-title-format . "%f"))
+  
   (leaf tool-bar
     :doc "ツールバー要らない"
     :custom
-    (tool-bar-mode . nil))
+    (tool-bar-mode . nil) :)
+
+  (leaf tabbar
+    :disabled t
+    :tag "github"
+    :ensure t)
+  
   (leaf column-number
     :doc "行に関する変更"
     :config
@@ -97,26 +109,49 @@
       :custom
       (column-number-mode . t)
       (global-linum-mode  . t)))
+  
   (leaf days
     :doc "月日をミニバッファに表示"
     :custom
     (display-time-string-forms . '((format "%s/%s(%s)" month day dayname)))
     (display-time-mode         . t))
+  
   (leaf y-or-n
     :doc "y or n"
     :config (defalias 'yes-or-no-p 'y-or-n-p)))
+
+(leaf FRAME_DESIGN
+  :tag "3rd_party"
+  :doc "GNU Emacs のデザインを変更する"
+  :config
+
+  (leaf modus-themes
+    :tag "gitlab" "github"
+    :url
+    "https://gitlab.com/protesilaos/modus-themes.git"
+    "https://protesilaos.com/emacs/modus-themes#h:3ed03a48-20d8-4ce7-b214-0eb7e4c79abe"
+    :emacs> 26.1
+    :ensure t
+    :bind ("<f3>" . modus-themes-toggle)
+    )
+)
+
+
 (leaf WRITINGS
   :doc "書く設定"
   :config
+  
   (leaf charactor
     :tag "builtin"
     :preface
+    
     (leaf encode-decode
       :tag "encode" "decode" "Japanese"
       :custom ((set-language-environment . "Japanese")
 	       (set-language-environment . 'utf-8)
 	       (prefer-coding-system . 'utf-8)))
     :config
+    
     (leaf font
       :doc "font指定"
       :config
@@ -125,10 +160,50 @@
 	(set-face-attribute 'default nil :family "Menlo" :height 128))
       (leaf japanese
 	:config))
+    
     (leaf char-scale
       :doc "文字幅"
       :custom
-      (face-font-rescale-alist . '((".*Menlo.*" . 1.0) ("-cdac$" . 1.3))))
+      (face-font-rescale-alist . '((".*Menlo.*" . 1.0) ("-cdac$" . 1.3)))))
+
+  (leaf highlight
+    :config
+
+    (leaf hl-line
+      :doc "ハイライト補完 現在の行"
+      :custom-face
+      ((hl-line quote ((t (:background "WhiteSmoke")))))
+      :config (global-hl-line-mode t))
+    
+					;(leaf indent-guide
+					;  :ensure t
+					;  :custom
+					;  (indent-guide-delay     . 0.0)
+					;  (indent-guide-recursive . t))
+
+    (leaf indent-tab
+      :tag
+      :doc "インデントを整えるコマンド"
+      :config
+      (leaf point-undo
+	:tag "url" "myel"
+	:url "http://www.emacswiki.org/cgi-bin/wiki/download/point-undo.el"
+	:init
+	(load "~/.emacs.d/myel/point-undo")
+	:bind ([f7] . point-undo))
+      
+      (leaf all-indent
+	:disabled t
+	:req "point-undo"
+	:after point-undo
+	:preface
+	(defun my:all-indent ()
+	  (interactive)
+	  (mark-whole-buffer)
+	  (indent-region (region-beginning)(region-end))
+	  (point-undo))
+	:bind ("C-x C-j" . my:all-indent)))
+    
     (leaf paren
       :tag "builtin"
       :doc "括弧の補完など"
@@ -136,17 +211,20 @@
       (show-paren-delay   . 0.0)
       (show-paren-style   . 'expression)
       (show-paren-mode    . t)
-      (electric-pair-mode . t)
-      )))
+      (electric-pair-mode . t)))
+  )
+
 (leaf FILE_SYSTEM
   :doc "ファイルの読み書き保存に関する設定"
   :config
   (leaf *saving-system
     :config
+    
     (leaf lock-file
       :tag "builtin"
       :doc "ロックファイル作成をしない"
       :config (setq create-lockfiles nil))
+    
     (leaf backup-file
       :tag "builtin"
       :doc "バックアップファイルの作成を/backupに変更"
@@ -161,6 +239,7 @@
 	(kept-old-versions              . 1)
 	(delete-old-versions            . t)
 	(auto-save-list-file-prefix     . ,(locate-user-emacs-file "backup/.saves-"))))
+    
     (leaf time-stamp
       :hook (before-save-hook . time-stamp)
       :custom
@@ -169,22 +248,51 @@
        (time-stamp-start      . "$Lastupdate: 2")
        (time-stamp-end        . "\\$")
        (time-stamp-format     . "%Y-%02m-%02d %02H:%02M:%02S")))
-  (leaf revert-buffer
-    :tag "builtin" "myconfig"
-    :doc "現在のバッファの再読み込み"
-    :preface
-    (defun my:revert-buffer (&optional force-reverting)
-      "revert-buffer-no-confirm-version"
-      (interactive "P")
-      (if (or force-reverting (not (buffer-modified-p)))
-	  (revert-buffer :ignore-auto :noconfirm)
-	(error "The buffer has been modified")))
-    :bind ("M-r" . my:revert-buffer))
-  (leaf autorevert
-    :custom
-    ((auto-revert-interval . 0.1))
-    :hook
-    (emacs-startup-hook . global-auto-revert-mode)))
+    
+    (leaf revert-buffer
+      :tag "builtin" "myconfig"
+      :doc "現在のバッファの再読み込み"
+      :preface
+      (defun my:revert-buffer (&optional force-reverting)
+	"revert-buffer-no-confirm-version"
+	(interactive "P")
+	(if (or force-reverting (not (buffer-modified-p)))
+	    (revert-buffer :ignore-auto :noconfirm)
+	  (error "The buffer has been modified")))
+      :bind ("M-r" . my:revert-buffer))
+    
+    (leaf autorevert
+      :custom
+      ((auto-revert-interval . 0.1))
+      :hook
+      (emacs-startup-hook . global-auto-revert-mode)))
+  )
+
+(leaf *MODE
+  :doc "特定のファイル形式に対応する"
+  :config
+
+  (leaf Markdown
+    :disabled t
+    :config
+    (leaf markdown-preview-mode
+      :el-get "ancane/markdown-preview-mode"
+      :require t
+      :commands markdown-preview-mode
+      :custom
+      (markdown-preview-stylesheets . (list "github.css")))
+    
+    (leaf  markdown-mode
+      :ensure t
+      :require t
+      :custom (("README\\.md\\'" . gfm-mode)
+               ("\\.md\\'" . markdown-mode)
+               ("\\.markdown\\'" . markdown-mode))
+      :setq (markdown-command . "multimarkdown")))
+
+  (leaf Python)
+  (leaf Rust)
+  (leaf Csv_and_Json)
   )
 
 (leaf KEYBIND
@@ -199,6 +307,7 @@
   :custom
   (kill-whole-line . t)
   :config
+  
   (leaf my:func-keybind
     :preface
     (defun my:enumerate-region (start end)
@@ -210,14 +319,14 @@
 	  (while (re-search-forward "^-\\|^[0-9]+)" end t);;-から始まる行の検索
 	    (replace-match (format "%d) " no))
 	    (setq no (+ no 1)))))))
-    :bind ("C-="    . my:enumerate-region))
+  :bind ("C-="    . my:enumerate-region))
 
 
 (leaf flycheck
   :disabled t
   :doc "リアルタイムエラー表記。On-the-fly syntax checking"
   :req "dash-2.12.1" "pkg-info-0.4" "let-alist-1.0.4" "seq-1.11" "emacs-24.3"
-  :tag "拾い物" "minor-mode" "tools" "languages" "convenience" "emacs>=24.3"
+  :tag "minor-mode" "tools" "languages" "convenience" "emacs>=24.3"
   :url "http://www.flycheck.org"
   :emacs>= 24.3
   :ensure t
@@ -225,10 +334,11 @@
          ("M-p" . flycheck-previous-error))
   :global-minor-mode global-flycheck-mode)
 
+
+
 (leaf ZONE
   :tag "builtin"
   :doc "zone拡張"
-  :
   :preface
   (defvar zone-programs [ zone-pgm-rotate-LR-variable ])
   (defun my:matrix ()
@@ -251,25 +361,23 @@
   (defun my:delf-no-contents ()
     (when (and (buffer-file-name (current-buffer))
 	       (= (point-min) (point-max)))
-	(delete-file (buffer-file-name (current-buffer)))))
+      (delete-file (buffer-file-name (current-buffer)))))
   :hook (after-save-hook . my:delf-no-contents))
 
 
 
 (leaf THIRD_PARTY
-  :tag "3rd_party"
+  :tag "3rd_party" "github"
   :config
+  
   (leaf sky-color-clock
     :el-get "zk-phi/sky-color-clock"
     :require t
     :custom
-    (sky-color-clock-format     . "%H:%M")
-    ;(mode-line-end-spaces      . '(:eval (my:sky-color-clock-form)))
+    (sky-color-clock-format . "%H:%M")
     :config
     (sky-color-clock-initialize 33);FUK
     (push '(:eval (sky-color-clock)) (default-value 'mode-line-format))))
-
-
 
 
 
