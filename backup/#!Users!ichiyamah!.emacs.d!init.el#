@@ -130,13 +130,13 @@
 	       :align below
 	       :ratio 0.2)
 
-	      
-	      
+	      (Major-mode
+	       :select t)
+
 	      ("*Help*"
 	       :align right)
 	      
 	      ("*eshell*"
-	       :select t
 	       :popup t
 	       :align below
 	       :ratio 0.2)
@@ -184,7 +184,7 @@
     (setq  modus-themes-italic-constructs t;itaric
 	   modus-themes-deuteranopia t     ;赤/緑　->　赤/青
 	   modus-themes-subtle-line-numbers nil
-	   
+       
 	   )
     
     ;テーマファイルのロード
@@ -358,13 +358,14 @@
   
   (leaf keybind
     :bind
-    ("C-m"    . 'newline-and-indent)
-    ("C-t"    . 'other-window)
-    ("C-x k"  . 'kill-this-buffer)
-    ("M-<up>" . 'switch-to-buffer)
-    ("M-l"    . 'leaf-tree-mode)
-    ("M-z"    . 'eshell)
-    ("M-t"    . 'multi-term)
+    ("C-m"    . newline-and-indent)
+    ("C-t"    . other-window)
+    ("C-x k"  . kill-this-buffer)
+    ("M-<up>" . switch-to-buffer)
+    ("M-b"    . buffer-menu-open)
+    ("M-l"    . leaf-tree-mode)
+    ("M-z"    . eshell)
+    ("M-t"    . multi-term)
     )
   
   (leaf my:func-keybind
